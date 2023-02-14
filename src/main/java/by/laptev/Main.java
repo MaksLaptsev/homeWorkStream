@@ -21,36 +21,36 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-//        System.out.println("------------\nTask №1\n");
-//        task1();
-//        System.out.println("------------\nTask №2\n");
-//        task2();
-//        System.out.println("------------\nTask №3\n");
-//        task3();
-//        System.out.println("------------\nTask №4\n");
-//        task4();
-//        System.out.println("------------\nTask №5\n");
-//        task5();
-//        System.out.println("------------\nTask №6\n");
-//        task6();
-//        System.out.println("------------\nTask №7\n");
-//        task7();
-//        System.out.println("------------\nTask №8\n");
-//        task8();
-//        System.out.println("------------\nTask №9\n");
-//        task9();
-//        System.out.println("------------\nTask №10\n");
-//        task10();
-//        System.out.println("------------\nTask №11\n");
-//        task11();
-//        System.out.println("------------\nTask №12\n");
-//        task12();
+        System.out.println("------------\nTask №1\n");
+        task1();
+        System.out.println("------------\nTask №2\n");
+        task2();
+        System.out.println("------------\nTask №3\n");
+        task3();
+        System.out.println("------------\nTask №4\n");
+        task4();
+        System.out.println("------------\nTask №5\n");
+        task5();
+        System.out.println("------------\nTask №6\n");
+        task6();
+        System.out.println("------------\nTask №7\n");
+        task7();
+        System.out.println("------------\nTask №8\n");
+        task8();
+        System.out.println("------------\nTask №9\n");
+        task9();
+        System.out.println("------------\nTask №10\n");
+        task10();
+        System.out.println("------------\nTask №11\n");
+        task11();
+        System.out.println("------------\nTask №12\n");
+        task12();
         System.out.println("------------\nTask №13\n");
         task13();
-//        System.out.println("------------\nTask №14\n");
-//        task14();
-//        System.out.println("------------\nTask №15\n");
-//        task15();
+        System.out.println("------------\nTask №14\n");
+        task14();
+        System.out.println("------------\nTask №15\n");
+        task15();
     }
 
     private static void task1() throws IOException {
@@ -66,9 +66,12 @@ public class Main {
     private static void task2() throws IOException {
         List<Animal> animals = Util.getAnimals();
         animals.stream()
-                .filter(x->x.getOrigin().equals("Japanese"))
-                .peek(x -> x.setBread(x.getBread().toUpperCase()))
-                .filter(x -> x.getGender().equals("Female"))
+                .filter(x -> "Japanese".equals(x.getOrigin()))
+                .map(x ->{
+                    x.setBread(x.getBread().toUpperCase());
+                    return x;
+                })
+                .filter(x -> "Female".equals(x.getGender()))
                 .map(Animal::getBread)
                 .forEach(System.out::println);
 
@@ -87,7 +90,7 @@ public class Main {
     private static void task4() throws IOException {
         List<Animal> animals = Util.getAnimals();
         long count = animals.stream()
-                .filter(x -> x.getGender().equals("Female"))
+                .filter(x -> "Female".equals(x.getGender()))
                 .count();
         System.out.println(count);
 
@@ -98,7 +101,7 @@ public class Main {
         List<Animal> animals = Util.getAnimals();
         boolean anyHave = animals.stream()
                 .filter(x -> x.getAge() >= 20 && x.getAge() <= 30)
-                .anyMatch(x->x.getOrigin().equals("Hungarian"));
+                .anyMatch(x->"Hungarian".equals(x.getOrigin()));
         System.out.println(anyHave);
 
     }
@@ -106,14 +109,14 @@ public class Main {
     private static void task6() throws IOException {
         List<Animal> animals = Util.getAnimals();
         boolean allAnimalOnlyMaleAndFemale = animals.stream()
-                .allMatch(x-> x.getGender().equals("Female") && x.getGender().equals("Male"));
+                .allMatch(x-> "Female".equals(x.getGender()) || "Male".equals(x.getGender()));
         System.out.println(allAnimalOnlyMaleAndFemale);
     }
 
     private static void task7() throws IOException {
         List<Animal> animals = Util.getAnimals();
         boolean noOneFromOceania = animals.stream()
-                .anyMatch(x->!x.getOrigin().equals("Oceania"));
+                .anyMatch(x->!"Oceania".equals(x.getOrigin()));
         System.out.println(noOneFromOceania);
 
     }
@@ -149,7 +152,7 @@ public class Main {
     private static void task11() throws IOException {
         List<Animal> animals = Util.getAnimals();
         double averageAgeAnimalsFromIndonesia = animals.stream()
-                .filter(x -> x.getOrigin().equals("Indonesian"))
+                .filter(x -> "Indonesian".equals(x.getOrigin()))
                 .mapToInt(Animal::getAge)
                 .average().orElse(0);
         System.out.println(averageAgeAnimalsFromIndonesia);
@@ -195,7 +198,6 @@ public class Main {
 
     private static void task14() throws IOException {
         List<Car> cars = Util.getCars();
-        //        Продолжить...
         List<Car> turkmenistanCars = new ArrayList<>();
         List<Car> uzbekistanCars = new ArrayList<>();
         List<Car> kazakhstanCars = new ArrayList<>();
@@ -203,17 +205,17 @@ public class Main {
         List<Car> russiaCars = new ArrayList<>();
         List<Car> mongoliaCars = new ArrayList<>();
 
-        Predicate<Car> predicateTurkmen = x -> x.getCarMake().equals("Jaguar") || x.getColor().equals("White");
-        Predicate<Car> predicateUzbek = x -> x.getMass()<1500 || x.getCarMake().equals("BMW")
-                || x.getCarMake().equals("Lexus")
-                || x.getCarMake().equals("Chrysler") || x.getCarMake().equals("Toyota");
-        Predicate<Car> predicateKazakh = x -> x.getMass() > 4000 && x.getColor().equals("Black")
-                || x.getCarMake().equals("GMC")
-                || x.getCarMake().equals("Dodge");
-        Predicate<Car> predicateKyrgyzstan = x -> x.getReleaseYear()<1982 || x.getCarMake().equals("Civic")
-                || x.getCarMake().equals("Cherokee");
-        Predicate<Car> predicateRussia = x -> !x.getColor().equals("Yellow") && !x.getColor().equals("Red")
-                && !x.getColor().equals("Green") && !x.getColor().equals("Blue") || x.getPrice() > 40000;
+        Predicate<Car> predicateTurkmen = x -> "Jaguar".equals(x.getCarMake()) || "White".equals(x.getColor());
+        Predicate<Car> predicateUzbek = x -> x.getMass()<1500 || "BMW".equals(x.getCarMake())
+                || "Lexus".equals(x.getCarMake())
+                || "Chrysler".equals(x.getCarMake()) || "Toyota".equals(x.getCarMake());
+        Predicate<Car> predicateKazakh = x -> x.getMass() > 4000 && "Black".equals(x.getColor())
+                || "GMC".equals(x.getCarMake())
+                || "Dodge".equals(x.getCarMake());
+        Predicate<Car> predicateKyrgyzstan = x -> x.getReleaseYear()<1982 || "Civic".equals(x.getCarMake())
+                || "Cherokee".equals(x.getCarMake());
+        Predicate<Car> predicateRussia = x -> !"Yellow".equals(x.getColor()) && !"Red".equals(x.getColor())
+                && !"Green".equals(x.getColor()) && !"Blue".equals(x.getColor()) || x.getPrice() > 40000;
         Predicate<Car> predicateMongolia = x -> x.getVin().contains("59");
 
 
@@ -239,7 +241,7 @@ public class Main {
         summaryInfo("Россия",russiaCars);
         summaryInfo("Монголия",mongoliaCars);
         summaryPriceLogistic(turkmenistanCars,uzbekistanCars,kazakhstanCars,kyrgyzstanCars,russiaCars,mongoliaCars);
-        System.out.println("Осталось невостребовано "+carList.size()+" автомабилей");
+        System.out.println("Осталось невостребовано "+carList.size()+" автомобилей");
 
 
 
@@ -247,10 +249,9 @@ public class Main {
 
     private static void task15() throws IOException {
         List<Flower> flowers = Util.getFlowers();
-        //        Продолжить...
-        String[] alpha = new String[]{"C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S"};
+        String[] rangeOfLetters = new String[]{"S","R","Q","P","O","N","M","L","K","J","I","H","G","F","E","D","C"};
         Predicate<Flower> flowerPredicate = f -> {
-            for (String s:alpha) {
+            for (String s:rangeOfLetters) {
                if(f.getCommonName().toLowerCase().startsWith(s.toLowerCase())){
                    return true;
                }
@@ -258,7 +259,7 @@ public class Main {
             return false;
         };
 
-        AtomicReference<Double> waterConsumptionPerDay = new AtomicReference<>(0.0);
+        AtomicReference<Double> summaryWaterConsumptionPerDay = new AtomicReference<>(0.0);
         int summaryPriceFlowers = flowers.stream()
                 .sorted(Comparator.comparing(Flower::getOrigin).reversed().thenComparing(Flower::getPrice).reversed()
                         .thenComparing(Flower::getWaterConsumptionPerDay).reversed())
@@ -266,11 +267,11 @@ public class Main {
                 .filter(Flower::isShadePreferred)
                 .filter(x-> x.getFlowerVaseMaterial().contains("Glass") || x.getFlowerVaseMaterial().contains("Aluminum")
                 || x.getFlowerVaseMaterial().contains("Steel"))
-                .peek(x-> waterConsumptionPerDay.updateAndGet(v -> v + x.getWaterConsumptionPerDay()))
+                .peek(x-> summaryWaterConsumptionPerDay.updateAndGet(v -> v + x.getWaterConsumptionPerDay()))
                 .mapToInt(Flower::getPrice)
                 .sum();
 
-        summaryInfoFlowers(waterConsumptionPerDay.get(),summaryPriceFlowers, 5, 1.39);
+        summaryInfoFlowers(summaryWaterConsumptionPerDay.get(),summaryPriceFlowers, 5, 1.39);
 
     }
 
@@ -285,19 +286,19 @@ public class Main {
 
     @SafeVarargs
     private static void summaryPriceLogistic(List<Car>... cars){
-        AtomicInteger mass = new AtomicInteger();
+        AtomicInteger totalMassCars = new AtomicInteger();
         List<List<Car>> carList = Arrays.stream(cars)
-                .peek(x -> x.forEach(car -> mass.addAndGet(car.getMass())))
+                .peek(x -> x.forEach(car -> totalMassCars.addAndGet(car.getMass())))
                 .toList();
-        BigDecimal price = BigDecimal.valueOf(Double.parseDouble(String.valueOf(mass))/1000*7.14).setScale(3, RoundingMode.CEILING);
+        BigDecimal price = BigDecimal.valueOf(Double.parseDouble(String.valueOf(totalMassCars))/1000*7.14).setScale(3, RoundingMode.CEILING);
         System.out.println("Общая выручка логистической компании составляет - "+price+" $");
     }
 
     private static void summaryInfoFlowers(Double waterPerDayLitr, int priceFlower, int years, double priceOneKubWater){
-        BigDecimal totalWater = BigDecimal.valueOf(waterPerDayLitr/1000*years).setScale(3,RoundingMode.CEILING) ;
-        BigDecimal totalprice = totalWater.multiply(BigDecimal.valueOf(priceOneKubWater)).setScale(3,RoundingMode.CEILING) ;
+        BigDecimal totalWater = BigDecimal.valueOf(waterPerDayLitr/1000*365*years).setScale(3,RoundingMode.CEILING) ;
+        BigDecimal totalPrice = totalWater.multiply(BigDecimal.valueOf(priceOneKubWater)).setScale(3,RoundingMode.CEILING) ;
         System.out.println("Для закупки растений потребуется - "+priceFlower+" $");
         System.out.println("Общее потребление воды за "+years+" лет: "+totalWater+" кубометров");
-        System.out.println("Стоимость обслуживания(полива) за "+years+" лет составит: "+totalprice+" $"+" при цене одного кубометра в "+priceOneKubWater+" $");
+        System.out.println("Стоимость обслуживания(полива) за "+years+" лет составит: "+totalPrice+" $"+" при цене одного кубометра в "+priceOneKubWater+" $");
     }
 }
