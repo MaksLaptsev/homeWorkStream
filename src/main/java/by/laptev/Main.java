@@ -16,45 +16,45 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        System.out.println("------------\nTask №1\n");
-        task1();
-        System.out.println("------------\nTask №2\n");
-        task2();
-        System.out.println("------------\nTask №3\n");
-        task3();
-        System.out.println("------------\nTask №4\n");
-        task4();
-        System.out.println("------------\nTask №5\n");
-        task5();
-        System.out.println("------------\nTask №6\n");
-        task6();
-        System.out.println("------------\nTask №7\n");
-        task7();
-        System.out.println("------------\nTask №8\n");
-        task8();
-        System.out.println("------------\nTask №9\n");
-        task9();
-        System.out.println("------------\nTask №10\n");
-        task10();
-        System.out.println("------------\nTask №11\n");
-        task11();
-        System.out.println("------------\nTask №12\n");
-        task12();
+//        System.out.println("------------\nTask №1\n");
+//        task1();
+//        System.out.println("------------\nTask №2\n");
+//        task2();
+//        System.out.println("------------\nTask №3\n");
+//        task3();
+//        System.out.println("------------\nTask №4\n");
+//        task4();
+//        System.out.println("------------\nTask №5\n");
+//        task5();
+//        System.out.println("------------\nTask №6\n");
+//        task6();
+//        System.out.println("------------\nTask №7\n");
+//        task7();
+//        System.out.println("------------\nTask №8\n");
+//        task8();
+//        System.out.println("------------\nTask №9\n");
+//        task9();
+//        System.out.println("------------\nTask №10\n");
+//        task10();
+//        System.out.println("------------\nTask №11\n");
+//        task11();
+//        System.out.println("------------\nTask №12\n");
+//        task12();
         System.out.println("------------\nTask №13\n");
         task13();
-        System.out.println("------------\nTask №14\n");
-        task14();
-        System.out.println("------------\nTask №15\n");
-        task15();
+//        System.out.println("------------\nTask №14\n");
+//        task14();
+//        System.out.println("------------\nTask №15\n");
+//        task15();
     }
 
     private static void task1() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
         animals.stream()
                 .filter(x-> x.getAge() >=10 & x.getAge() <20)
                 .sorted(Comparator.comparingInt(Animal::getAge))
@@ -65,7 +65,6 @@ public class Main {
 
     private static void task2() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
         animals.stream()
                 .filter(x->x.getOrigin().equals("Japanese"))
                 .peek(x -> x.setBread(x.getBread().toUpperCase()))
@@ -77,7 +76,6 @@ public class Main {
 
     private static void task3() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
         animals.stream()
                 .filter(x->x.getAge()>30)
                 .map(Animal::getOrigin)
@@ -88,7 +86,6 @@ public class Main {
 
     private static void task4() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
         long count = animals.stream()
                 .filter(x -> x.getGender().equals("Female"))
                 .count();
@@ -99,7 +96,6 @@ public class Main {
 
     private static void task5() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
         boolean anyHave = animals.stream()
                 .filter(x -> x.getAge() >= 20 && x.getAge() <= 30)
                 .anyMatch(x->x.getOrigin().equals("Hungarian"));
@@ -109,7 +105,6 @@ public class Main {
 
     private static void task6() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
         boolean allAnimalOnlyMaleAndFemale = animals.stream()
                 .allMatch(x-> x.getGender().equals("Female") && x.getGender().equals("Male"));
         System.out.println(allAnimalOnlyMaleAndFemale);
@@ -117,7 +112,6 @@ public class Main {
 
     private static void task7() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
         boolean noOneFromOceania = animals.stream()
                 .anyMatch(x->!x.getOrigin().equals("Oceania"));
         System.out.println(noOneFromOceania);
@@ -126,7 +120,6 @@ public class Main {
 
     private static void task8() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
         int maxAgeFirst100 = animals.stream()
                 .sorted(Comparator.comparing(Animal::getBread))
                 .limit(100)
@@ -137,7 +130,6 @@ public class Main {
 
     private static void task9() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
         int mostShort = animals.stream()
                 .map(Animal::getBread)
                 .map(String::toCharArray)
@@ -148,7 +140,6 @@ public class Main {
 
     private static void task10() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
         int sumAgeAllAnimals = animals.stream()
                 .mapToInt(Animal::getAge)
                 .sum();
@@ -157,7 +148,6 @@ public class Main {
 
     private static void task11() throws IOException {
         List<Animal> animals = Util.getAnimals();
-
         double averageAgeAnimalsFromIndonesia = animals.stream()
                 .filter(x -> x.getOrigin().equals("Indonesian"))
                 .mapToInt(Animal::getAge)
@@ -167,7 +157,6 @@ public class Main {
 
     private static void task12() throws IOException {
         List<Person> people = Util.getPersons();
-//        Продолжить...
         LocalDate currentDate = LocalDate.now();
         people.stream()
                 .filter(x -> Period.between(x.getDateOfBirth(),currentDate).getYears() >= 18 &&
@@ -180,45 +169,28 @@ public class Main {
 
     private static void task13() throws IOException {
         List<House> houses = Util.getHouses();
-        //        Продолжить...
         LocalDate currentDate = LocalDate.now();
 
-        List<Person> firstGroup = houses.stream()
-                .filter(x -> x.getBuildingType().equals("Hospital"))
-                .flatMap(x -> x.getPersonList().stream())
-                .toList();
-
-        List<Person> secondGroup =new ArrayList<>(houses.stream()
-                .filter(x -> !x.getBuildingType().equals("Hospital"))
-                .flatMap(x -> x.getPersonList().stream())
-                .filter(x -> (Period.between(x.getDateOfBirth(),currentDate).getYears()<18)
-                        || (Period.between(x.getDateOfBirth(),currentDate).getYears()>=58) && x.getGender().equals("Female")
-                        || (Period.between(x.getDateOfBirth(),currentDate).getYears()>=63) && x.getGender().equals("Male"))
-                .toList());
-
-        List<Person> anotherPeople = new ArrayList<>(houses.stream()
-                .flatMap(x -> x.getPersonList().stream())
-                .toList());
-
-        ArrayList<Person> people = new ArrayList<>(firstGroup);
-        secondGroup.removeAll(firstGroup);
-        people.addAll(secondGroup);
-        anotherPeople.removeAll(firstGroup);
-        people.addAll(anotherPeople);
-
-        System.out.println(firstGroup);
-        System.out.println("-------------------------------------------");
-        people.stream()
-                .limit(500)
+        Stream.concat(
+                Stream.concat(
+                        houses.stream()
+                                .filter(x -> "Hospital".equals(x.getBuildingType()))
+                                .flatMap(x -> x.getPersonList().stream()),
+                        houses.stream()
+                                .filter(x -> !"Hospital".equals(x.getBuildingType()))
+                                .flatMap(x -> x.getPersonList().stream())
+                                .filter(x -> (Period.between(x.getDateOfBirth(),currentDate).getYears()<18)
+                                        || (Period.between(x.getDateOfBirth(),currentDate).getYears()>=58) && "Female".equals(x.getGender())
+                                        || (Period.between(x.getDateOfBirth(),currentDate).getYears()>=63) && "Male".equals(x.getGender()))
+                ),
+                houses.stream()
+                        .filter(x -> !"Hospital".equals(x.getBuildingType()))
+                        .flatMap(x -> x.getPersonList().stream())
+                        .filter(x -> (Period.between(x.getDateOfBirth(),currentDate).getYears()>18)
+                                || (Period.between(x.getDateOfBirth(),currentDate).getYears()<58) && "Female".equals(x.getGender())
+                                || (Period.between(x.getDateOfBirth(),currentDate).getYears()<63) && "Male".equals(x.getGender()))
+                ).limit(500)
                 .forEach(System.out::println);
-
-
-
-
-
-
-
-
     }
 
     private static void task14() throws IOException {
