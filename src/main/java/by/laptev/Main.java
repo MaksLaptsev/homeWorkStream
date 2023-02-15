@@ -165,7 +165,7 @@ public class Main {
         people.stream()
                 .filter(x -> Period.between(x.getDateOfBirth(),currentDate).getYears() >= 18 &&
                         Period.between(x.getDateOfBirth(),currentDate).getYears() < 27)
-                .filter(x -> x.getGender().equals("Male"))
+                .filter(x -> "Male".equals(x.getGender()))
                 .sorted(Comparator.comparingInt(Person::getRecruitmentGroup))
                 .limit(200)
                 .forEach(System.out::println);
