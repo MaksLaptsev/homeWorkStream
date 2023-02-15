@@ -282,12 +282,11 @@ public class Main {
 
     @SafeVarargs
     private static void summaryPriceLogistic(List<Car>... cars){
-        AtomicInteger totalMassCars = new AtomicInteger();
-        List<List<Car>> carList = Arrays.stream(cars)
-                .peek(x -> x.forEach(car -> totalMassCars.addAndGet(car.getMass())))
-                .toList();
-        BigDecimal price = BigDecimal.valueOf(Double.parseDouble(String.valueOf(totalMassCars))/1000*7.14).setScale(3, RoundingMode.CEILING);
-        System.out.println("Общая выручка логистической компании составляет - "+price+" $");
+        Integer totalMassCars = Arrays.stream(cars)
+                .flatMapToInt(x -> x.stream().mapToInt(Car::getMass))
+                .sum();
+        BigDecimal totalIncome = BigDecimal.valueOf(Double.parseDouble(String.valueOf(totalMassCars))/1000*7.14).setScale(3, RoundingMode.CEILING);
+        System.out.println("Общая выручка логистической компании составляет - "+totalIncome+" $");
     }
 
     private static void summaryInfoFlowers(Double waterPerDayLitr, int priceFlower, int years, double priceOneKubWater){
