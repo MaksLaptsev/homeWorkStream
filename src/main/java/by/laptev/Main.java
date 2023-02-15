@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -220,17 +221,17 @@ public class Main {
 
 
                 List<Car> carList = cars.stream()
-                        .peek(x -> {if(predicateTurkmen.test(x)) turkmenistanCars.add(x);})
+                        .map(x -> {if(predicateTurkmen.test(x)) turkmenistanCars.add(x);return x;})
                         .filter(x -> !predicateTurkmen.test(x))
-                        .peek(x -> {if(predicateUzbek.test(x)) uzbekistanCars.add(x);})
+                        .map(x -> {if(predicateUzbek.test(x)) uzbekistanCars.add(x);return x;})
                         .filter(x -> !predicateUzbek.test(x))
-                        .peek(x -> {if(predicateKazakh.test(x)) kazakhstanCars.add(x);})
+                        .map(x -> {if(predicateKazakh.test(x)) kazakhstanCars.add(x);return x;})
                         .filter(x -> !predicateKazakh.test(x))
-                        .peek(x -> {if(predicateKyrgyzstan.test(x)) kyrgyzstanCars.add(x);})
+                        .map(x -> {if(predicateKyrgyzstan.test(x)) kyrgyzstanCars.add(x);return x;})
                         .filter(x -> !predicateKyrgyzstan.test(x))
-                        .peek(x -> {if(predicateRussia.test(x)) russiaCars.add(x);})
+                        .map(x -> {if(predicateRussia.test(x)) russiaCars.add(x);return x;})
                         .filter(x -> !predicateRussia.test(x))
-                        .peek(x -> {if(predicateMongolia.test(x)) mongoliaCars.add(x);})
+                        .map(x -> {if(predicateMongolia.test(x)) mongoliaCars.add(x);return x;})
                         .filter(x -> !predicateMongolia.test(x))
                         .toList();
 
@@ -249,15 +250,10 @@ public class Main {
 
     private static void task15() throws IOException {
         List<Flower> flowers = Util.getFlowers();
-        String[] rangeOfLetters = new String[]{"S","R","Q","P","O","N","M","L","K","J","I","H","G","F","E","D","C"};
-        Predicate<Flower> flowerPredicate = f -> {
-            for (String s:rangeOfLetters) {
-               if(f.getCommonName().toLowerCase().startsWith(s.toLowerCase())){
-                   return true;
-               }
-            }
-            return false;
-        };
+
+        Predicate<Flower> flowerPredicate = f -> f.getCommonName().toUpperCase().charAt(0) <='S'
+                && f.getCommonName().toUpperCase().charAt(0) >= 'C';
+
 
         AtomicReference<Double> summaryWaterConsumptionPerDay = new AtomicReference<>(0.0);
         int summaryPriceFlowers = flowers.stream()
@@ -295,7 +291,8 @@ public class Main {
     }
 
     private static void summaryInfoFlowers(Double waterPerDayLitr, int priceFlower, int years, double priceOneKubWater){
-        BigDecimal totalWater = BigDecimal.valueOf(waterPerDayLitr/1000*365*years).setScale(3,RoundingMode.CEILING) ;
+        long daysInYears = ChronoUnit.DAYS.between(LocalDate.now(), LocalDate.now().plusYears(years));
+        BigDecimal totalWater = BigDecimal.valueOf(waterPerDayLitr/1000*daysInYears).setScale(3,RoundingMode.CEILING) ;
         BigDecimal totalPrice = totalWater.multiply(BigDecimal.valueOf(priceOneKubWater)).setScale(3,RoundingMode.CEILING) ;
         System.out.println("Для закупки растений потребуется - "+priceFlower+" $");
         System.out.println("Общее потребление воды за "+years+" лет: "+totalWater+" кубометров");
